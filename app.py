@@ -518,12 +518,12 @@ if st.sidebar.button("Predict Attrition"):
 
     with st.expander("📋 Employee Input Summary"):
 
-    display_df = employee.T
-    display_df.columns = ["Value"]
-
-    st.dataframe(
-        display_df,
-        use_container_width=True
+        display_df = employee.T
+        display_df.columns = ["Value"]
+    
+        st.dataframe(
+            display_df,
+            use_container_width=True
     )
 
     st.markdown("---")
