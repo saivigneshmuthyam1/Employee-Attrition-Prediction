@@ -387,35 +387,34 @@ if st.sidebar.button("Predict Attrition"):
 
     with left:
 
-        st.subheader("📊 Attrition Risk Gauge")
+    st.subheader("📊 Attrition Risk Gauge")
 
-        fig = go.Figure(go.Indicator(
-            mode="gauge+number",
-            value=probability * 100,
-            title={'text': "Attrition Risk (%)"},
-            gauge={
-                'axis': {'range': [0,100]},
-                'bar': {'color': "#2563EB"},
-                'steps': [
-                    {'range':[0,30],'color':"#22C55E"},
-                    {'range':[30,70],'color':"#EAB308"},
-                    {'range':[70,100],'color':"#EF4444"}
-                ]
-            }
-        ))
+    fig = go.Figure(go.Indicator(
+        mode="gauge+number",
+        value=probability * 100,
+        title={'text': "Attrition Risk (%)"},
+        gauge={
+            'axis': {'range': [0,100]},
+            'bar': {'color': "#2563EB"},
+            'steps': [
+                {'range':[0,30],'color':"#22C55E"},
+                {'range':[30,70],'color':"#EAB308"},
+                {'range':[70,100],'color':"#EF4444"}
+            ]
+        }
+    ))
 
-       fig.update_layout(
-            height=250,
-            margin=dict(l=0,r=0,t=20,b=0),
-            paper_bgcolor="#0E1117",
-            font_color="white"
-        )
+    fig.update_layout(
+        height=250,
+        margin=dict(l=0,r=0,t=20,b=0),
+        paper_bgcolor="#0E1117",
+        font_color="white"
+    )
 
-        st.plotly_chart(
-            fig,
-            use_container_width=True
-        )
-
+    st.plotly_chart(
+        fig,
+        use_container_width=True
+    )
     with right:
 
         st.subheader("⚠️ Risk Factors")
