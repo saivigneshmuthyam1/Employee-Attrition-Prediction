@@ -10,6 +10,13 @@
 #     st.error(str(e))
 #     st.code(traceback.format_exc())
 #     st.stop()
+import streamlit as st
+import pandas as pd
+import joblib
+
+model = joblib.load("attrition_model_streamlit.pkl")
+
+st.title("AI Powered Employee Attrition Prediction System")
 st.title("AI Powered Employee Attrition Prediction System")
 
 st.sidebar.header("Employee Information")
