@@ -405,11 +405,11 @@ if st.sidebar.button("Predict Attrition"):
         ))
 
        fig.update_layout(
-    height=250,
-    margin=dict(l=0,r=0,t=20,b=0),
-    paper_bgcolor="#0E1117",
-    font_color="white"
-)
+            height=250,
+            margin=dict(l=0,r=0,t=20,b=0),
+            paper_bgcolor="#0E1117",
+            font_color="white"
+        )
 
         st.plotly_chart(
             fig,
