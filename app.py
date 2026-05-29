@@ -1,14 +1,12 @@
 import streamlit as st
-import pandas as pd
 import joblib
+import traceback
 
-st.set_page_config(
-    page_title="Employee Attrition Predictor",
-    layout="wide"
-)
+try:
+    model = joblib.load("attrition_model_v2.pkl")
+    st.success("Model loaded successfully")
 
-model = joblib.load("attrition_model_v2.pkl")
-
-st.title("AI Powered Employee Attrition Prediction System")
-
-st.write("Predict employee attrition risk using Machine Learning")
+except Exception as e:
+    st.error(str(e))
+    st.code(traceback.format_exc())
+    st.stop()
