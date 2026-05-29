@@ -1,275 +1,3 @@
-# import streamlit as st
-# import pandas as pd
-# import joblib
-
-# # ---------------------------
-# # PAGE CONFIG
-# # ---------------------------
-# st.set_page_config(
-#     page_title="AI Employee Attrition Prediction",
-#     page_icon="📊",
-#     layout="wide"
-# )
-
-# # ---------------------------
-# # LOAD MODEL
-# # ---------------------------
-# model = joblib.load("attrition_model_v2.pkl")
-
-# THRESHOLD = 0.40
-
-# # ---------------------------
-# # TITLE
-# # ---------------------------
-# st.title("📊 AI Powered Employee Attrition Prediction System")
-# st.markdown("Predict employee attrition risk using Machine Learning")
-
-# # ---------------------------
-# # SIDEBAR INPUTS
-# # ---------------------------
-# st.sidebar.header("Employee Information")
-
-# # Personal Information
-# age = st.sidebar.number_input("Age", 18, 60, 30)
-# gender = st.sidebar.selectbox(
-#     "Gender",
-#     ["Female", "Male"]
-# )
-
-# marital_status = st.sidebar.selectbox(
-#     "Marital Status",
-#     ["Divorced", "Married", "Single"]
-# )
-
-# # Job Information
-# business_travel = st.sidebar.selectbox(
-#     "Business Travel",
-#     ["Non-Travel", "Travel_Frequently", "Travel_Rarely"]
-# )
-
-# department = st.sidebar.selectbox(
-#     "Department",
-#     ["Human Resources", "Research & Development", "Sales"]
-# )
-
-# job_role = st.sidebar.selectbox(
-#     "Job Role",
-#     [
-#         "Healthcare Representative",
-#         "Human Resources",
-#         "Laboratory Technician",
-#         "Manager",
-#         "Manufacturing Director",
-#         "Research Director",
-#         "Research Scientist",
-#         "Sales Executive",
-#         "Sales Representative"
-#     ]
-# )
-
-# overtime = st.sidebar.selectbox(
-#     "OverTime",
-#     ["No", "Yes"]
-# )
-
-# # Compensation
-# monthly_income = st.sidebar.number_input(
-#     "Monthly Income",
-#     1000,
-#     25000,
-#     5000
-# )
-
-# # Satisfaction
-# job_satisfaction = st.sidebar.selectbox(
-#     "Job Satisfaction",
-#     [1, 2, 3, 4]
-# )
-
-# environment_satisfaction = st.sidebar.selectbox(
-#     "Environment Satisfaction",
-#     [1, 2, 3, 4]
-# )
-
-# # Experience
-# years_at_company = st.sidebar.number_input(
-#     "Years At Company",
-#     0,
-#     40,
-#     5
-# )
-
-# total_working_years = st.sidebar.number_input(
-#     "Total Working Years",
-#     0,
-#     40,
-#     8
-# )
-
-# # ---------------------------
-# # PREDICT BUTTON
-# # ---------------------------
-# if st.sidebar.button("Predict Attrition"):
-
-#     employee = pd.DataFrame([{
-#         "Age": age,
-#         "BusinessTravel": business_travel,
-#         "DailyRate": 800,
-#         "Department": department,
-#         "DistanceFromHome": 5,
-#         "Education": 3,
-#         "EducationField": "Life Sciences",
-#         "EnvironmentSatisfaction": environment_satisfaction,
-#         "Gender": gender,
-#         "HourlyRate": 60,
-#         "JobInvolvement": 3,
-#         "JobLevel": 2,
-#         "JobRole": job_role,
-#         "JobSatisfaction": job_satisfaction,
-#         "MaritalStatus": marital_status,
-#         "MonthlyIncome": monthly_income,
-#         "MonthlyRate": 15000,
-#         "NumCompaniesWorked": 2,
-#         "OverTime": overtime,
-#         "PercentSalaryHike": 15,
-#         "PerformanceRating": 3,
-#         "RelationshipSatisfaction": 3,
-#         "StockOptionLevel": 1,
-#         "TotalWorkingYears": total_working_years,
-#         "TrainingTimesLastYear": 2,
-#         "WorkLifeBalance": 3,
-#         "YearsAtCompany": years_at_company,
-#         "YearsInCurrentRole": 3,
-#         "YearsSinceLastPromotion": 1,
-#         "YearsWithCurrManager": 3
-#     }])
-
-#     probability = model.predict_proba(employee)[0][1]
-
-#     prediction = (
-#         "Likely To Leave"
-#         if probability >= THRESHOLD
-#         else "Likely To Stay"
-#     )
-
-#     if probability < 0.30:
-#         risk = "Low Risk"
-#     elif probability < 0.70:
-#         risk = "Medium Risk"
-#     else:
-#         risk = "High Risk"
-
-#     # ---------------------------
-#     # METRICS
-#     # ---------------------------
-#     col1, col2, col3 = st.columns(3)
-
-#     with col1:
-#         st.metric(
-#             "Attrition Probability",
-#             f"{probability*100:.2f}%"
-#         )
-
-#     with col2:
-#         st.metric(
-#             "Risk Level",
-#             risk
-#         )
-
-#     with col3:
-#         st.metric(
-#             "Prediction",
-#             prediction
-#         )
-
-#     # ---------------------------
-#     # PROGRESS BAR
-#     # ---------------------------
-#     st.subheader("Risk Meter")
-#     st.progress(float(probability))
-
-#     # ---------------------------
-#     # RISK FACTORS
-#     # ---------------------------
-#     st.subheader("Top Risk Factors")
-
-#     risk_factors = []
-
-#     if overtime == "Yes":
-#         risk_factors.append(
-#             "Employee works overtime"
-#         )
-
-#     if monthly_income < 5000:
-#         risk_factors.append(
-#             "Below average salary"
-#         )
-
-#     if job_satisfaction <= 2:
-#         risk_factors.append(
-#             "Low job satisfaction"
-#         )
-
-#     if environment_satisfaction <= 2:
-#         risk_factors.append(
-#             "Low environment satisfaction"
-#         )
-
-#     if years_at_company < 3:
-#         risk_factors.append(
-#             "Short company tenure"
-#         )
-
-#     if risk_factors:
-#         for factor in risk_factors:
-#             st.warning(factor)
-#     else:
-#         st.success(
-#             "No major attrition indicators detected."
-#         )
-
-#     # ---------------------------
-#     # HR RECOMMENDATIONS
-#     # ---------------------------
-#     st.subheader("HR Recommendations")
-
-#     if risk == "High Risk":
-
-#         st.error("""
-#         • Immediate HR discussion
-
-#         • Review compensation
-
-#         • Reduce overtime
-
-#         • Explore promotion opportunities
-
-#         • Conduct retention interview
-#         """)
-
-#     elif risk == "Medium Risk":
-
-#         st.warning("""
-#         • Increase employee engagement
-
-#         • Review workload
-
-#         • Schedule periodic check-ins
-#         """)
-
-#     else:
-
-#         st.success("""
-#         • Maintain current engagement strategy
-
-#         • Continue career development initiatives
-#         """)
-
-#     # ---------------------------
-#     # INPUT SUMMARY
-#     # ---------------------------
-#     st.subheader("Employee Data")
-#     st.dataframe(employee)
 
 
 import streamlit as st
@@ -605,89 +333,132 @@ if st.sidebar.button("Predict Attrition"):
 
     # METRICS
 
-    col1, col2, col3 = st.columns(3)
+        # ======================================
+    # PROFESSIONAL KPI CARDS
+    # ======================================
 
-    col1.metric(
-        "Attrition Probability",
-        f"{probability*100:.2f}%"
-    )
+    st.markdown("## Prediction Results")
 
-    col2.metric(
-        "Risk Level",
-        risk
-    )
+    c1, c2, c3 = st.columns(3)
 
-    col3.metric(
-        "Prediction",
-        prediction
-    )
+    with c1:
+        st.markdown(f"""
+        <div style="
+            background:#1E293B;
+            padding:20px;
+            border-radius:15px;
+            text-align:center;">
+            <h4>Attrition Probability</h4>
+            <h2>{probability*100:.2f}%</h2>
+        </div>
+        """, unsafe_allow_html=True)
 
-    # GAUGE
+    with c2:
+        st.markdown(f"""
+        <div style="
+            background:#1E293B;
+            padding:20px;
+            border-radius:15px;
+            text-align:center;">
+            <h4>Risk Level</h4>
+            <h2>{risk}</h2>
+        </div>
+        """, unsafe_allow_html=True)
 
-    st.subheader("📊 Attrition Risk Gauge")
+    with c3:
+        st.markdown(f"""
+        <div style="
+            background:#1E293B;
+            padding:20px;
+            border-radius:15px;
+            text-align:center;">
+            <h4>Prediction</h4>
+            <h2>{prediction}</h2>
+        </div>
+        """, unsafe_allow_html=True)
 
-    fig = go.Figure(go.Indicator(
-        mode="gauge+number",
-        value=probability * 100,
-        title={'text': "Attrition Risk (%)"},
-        gauge={
-            'axis': {'range': [0,100]},
-            'bar': {'color': "darkblue"},
-            'steps': [
-                {'range': [0,30], 'color': "green"},
-                {'range': [30,70], 'color': "gold"},
-                {'range': [70,100], 'color': "red"}
-            ]
-        }
-    ))
+    st.markdown("---")
 
-    st.plotly_chart(
-        fig,
-        use_container_width=True
-    )
+    # ======================================
+    # GAUGE + RISK FACTORS
+    # ======================================
 
-    # RISK FACTORS
+    left, right = st.columns([2,1])
 
-    st.subheader("Top Risk Factors")
+    with left:
 
-    risk_factors = []
+        st.subheader("📊 Attrition Risk Gauge")
 
-    if overtime == "Yes":
-        risk_factors.append("Employee works overtime")
+        fig = go.Figure(go.Indicator(
+            mode="gauge+number",
+            value=probability * 100,
+            title={'text': "Attrition Risk (%)"},
+            gauge={
+                'axis': {'range': [0,100]},
+                'bar': {'color': "#2563EB"},
+                'steps': [
+                    {'range':[0,30],'color':"#22C55E"},
+                    {'range':[30,70],'color':"#EAB308"},
+                    {'range':[70,100],'color':"#EF4444"}
+                ]
+            }
+        ))
 
-    if monthly_income < 5000:
-        risk_factors.append("Below average salary")
-
-    if job_satisfaction <= 2:
-        risk_factors.append("Low job satisfaction")
-
-    if environment_satisfaction <= 2:
-        risk_factors.append("Low environment satisfaction")
-
-    if years_at_company < 3:
-        risk_factors.append("Short company tenure")
-
-    if len(risk_factors) == 0:
-        st.success(
-            "No major attrition indicators detected."
+        fig.update_layout(
+            height=350,
+            margin=dict(l=20,r=20,t=40,b=20)
         )
 
-    else:
-        for factor in risk_factors:
-            st.warning(factor)
+        st.plotly_chart(
+            fig,
+            use_container_width=True
+        )
 
+    with right:
+
+        st.subheader("⚠️ Risk Factors")
+
+        risk_factors = []
+
+        if overtime == "Yes":
+            risk_factors.append("Employee works overtime")
+
+        if monthly_income < 5000:
+            risk_factors.append("Below average salary")
+
+        if job_satisfaction <= 2:
+            risk_factors.append("Low job satisfaction")
+
+        if environment_satisfaction <= 2:
+            risk_factors.append("Low environment satisfaction")
+
+        if years_at_company < 3:
+            risk_factors.append("Short company tenure")
+
+        if len(risk_factors) == 0:
+            st.success(
+                "No major attrition indicators."
+            )
+        else:
+            for factor in risk_factors:
+                st.warning(factor)
+
+    st.markdown("---")
+
+    # ======================================
     # HR RECOMMENDATIONS
+    # ======================================
 
-    st.subheader("HR Recommendations")
+    st.subheader("🎯 HR Recommendations")
 
     if risk == "High Risk":
 
         st.error("""
 • Immediate HR discussion
 
-• Review compensation
+• Review compensation package
 
-• Reduce overtime
+• Reduce overtime burden
 
 • Explore promotion opportunities
 
@@ -702,6 +473,8 @@ if st.sidebar.button("Predict Attrition"):
 • Review workload
 
 • Schedule periodic check-ins
+
+• Discuss career development
 """)
 
     else:
@@ -710,9 +483,15 @@ if st.sidebar.button("Predict Attrition"):
 • Maintain current engagement strategy
 
 • Continue career development initiatives
+
+• Recognize employee contributions
 """)
 
-    # REPORT
+    st.markdown("---")
+
+    # ======================================
+    # DOWNLOAD REPORT
+    # ======================================
 
     st.subheader("📄 Download Report")
 
@@ -731,8 +510,25 @@ if st.sidebar.button("Predict Attrition"):
         "text/csv"
     )
 
-    # DATA
+    # ======================================
+    # COLLAPSIBLE EMPLOYEE DATA
+    # ======================================
 
-    st.subheader("Employee Data")
+    with st.expander("View Employee Input Data"):
+        st.dataframe(employee)
 
-    st.dataframe(employee)
+    st.markdown("---")
+
+    st.markdown("""
+    ### Project Information
+
+    **Dataset:** IBM HR Analytics Employee Attrition Dataset
+
+    **Model:** Logistic Regression (Balanced)
+
+    **Accuracy:** 73.13%
+
+    **ROC-AUC:** 80.32%
+
+    **Developer:** Saivignesh Muthyam
+    """)
