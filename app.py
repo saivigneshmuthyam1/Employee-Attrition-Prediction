@@ -383,7 +383,7 @@ if st.sidebar.button("Predict Attrition"):
     # GAUGE + RISK FACTORS
     # ======================================
 
-    left, right = st.columns([2,1])
+    left, right = st.columns([3,2])
 
     with left:
 
@@ -404,10 +404,12 @@ if st.sidebar.button("Predict Attrition"):
             }
         ))
 
-        fig.update_layout(
-            height=350,
-            margin=dict(l=20,r=20,t=40,b=20)
-        )
+       fig.update_layout(
+    height=250,
+    margin=dict(l=0,r=0,t=20,b=0),
+    paper_bgcolor="#0E1117",
+    font_color="white"
+)
 
         st.plotly_chart(
             fig,
@@ -514,8 +516,15 @@ if st.sidebar.button("Predict Attrition"):
     # COLLAPSIBLE EMPLOYEE DATA
     # ======================================
 
-    with st.expander("View Employee Input Data"):
-        st.dataframe(employee)
+    with st.expander("📋 Employee Input Summary"):
+
+    display_df = employee.T
+    display_df.columns = ["Value"]
+
+    st.dataframe(
+        display_df,
+        use_container_width=True
+    )
 
     st.markdown("---")
 
