@@ -383,7 +383,14 @@ if st.sidebar.button("Predict Attrition"):
     # GAUGE + RISK FACTORS
     # ======================================
 
-    left, right = st.columns([3,2])
+    #left, right = st.columns([2,1])
+    gauge_col, factor_col = st.columns([1.5,1])
+    with gauge_col:
+        st.subheader("📊 Attrition Risk Gauge")
+        st.plotly_chart(fig)
+
+    with factor_col:
+        st.subheader("⚠️ Risk Factors")
 
     with left:
 
@@ -405,7 +412,7 @@ if st.sidebar.button("Predict Attrition"):
         ))
 
         fig.update_layout(
-            height=250,
+            height=350,
             margin=dict(l=0,r=0,t=20,b=0),
             paper_bgcolor="#0E1117",
             font_color="white"
@@ -413,7 +420,7 @@ if st.sidebar.button("Predict Attrition"):
     
         st.plotly_chart(
             fig,
-            use_container_width=True
+            use_container_width=False
         )
     
     with right:
@@ -528,16 +535,11 @@ if st.sidebar.button("Predict Attrition"):
 
     st.markdown("---")
 
-    st.markdown("""
-    ### Project Information
+    st.markdown("---")
 
-    **Dataset:** IBM HR Analytics Employee Attrition Dataset
-
-    **Model:** Logistic Regression (Balanced)
-
-    **Accuracy:** 73.13%
-
-    **ROC-AUC:** 80.32%
-
-    **Developer:** Saivignesh Muthyam
-    """)
+    m1,m2,m3,m4 = st.columns(4)
+    
+    m1.metric("Accuracy","73.1%")
+    m2.metric("Recall","78.7%")
+    m3.metric("Precision","34.9%")
+    m4.metric("ROC-AUC","80.3%")
