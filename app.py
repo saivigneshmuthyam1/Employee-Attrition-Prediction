@@ -39,7 +39,7 @@ st.set_page_config(
 # ---------------------------
 # LOAD MODEL
 # ---------------------------
-model = joblib.load("attrition_model_streamlit.pkl")
+model = joblib.load("attrition_model_v2.pkl")
 
 THRESHOLD = 0.40
 
